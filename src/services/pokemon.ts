@@ -7,3 +7,8 @@ export const getPokemon = async (pokemonName: ParamValue) => {
     const data = await fetch(`${API_URL}/${pokemonName}` || "");
     return data.json();
 };
+
+export const getPokemons = async () => {
+    const data = await fetch(`${API_URL}` || "");
+    return data.json();
+};

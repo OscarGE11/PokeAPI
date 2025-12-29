@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Container from "./components/Container";
 import "./globals.css";
-import Header from "./components/Header";
+import Header from "../components/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +17,9 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <Header />
         <div className="flex-1">
-          <Container>{children}</Container>
+          <div className="min-h-screen px-10 py-5 bg-linear-to-bl from-slate-300 to-slate-800">
+            {children}
+          </div>
         </div>
       </body>
     </html>

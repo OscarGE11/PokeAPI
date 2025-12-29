@@ -1,52 +1,37 @@
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { use } from "react";
+"use client";
+import Input from "@/components/Input";
+import PokemonTable from "@/components/PokemonTable";
+import type { Pokemon } from "@/models/pokemon";
+import { getPokemons } from "@/services/pokemon";
 
-interface PokemonProps {
-  name: string;
-  url: string;
-}
-
-const API_URL: string | undefined =
-  `${process.env.NEXT_PUBLIC_API_URL}?limit=50`;
-
-async function loadData() {
-  return (await fetch(API_URL || "")).json();
-}
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const data = use(loadData());
-  const pokemonList = data.results;
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+
+  const [filter, setFilter] = useState<string>("");
+
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      const data = await getPokemons();
+      setPokemonList(data.results);
+    };
+    fetchPokemon();
+  }, []);
+
+  const filteredPokemonList = pokemonList.filter((pokemon) =>
+    pokemon.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
+  );
 
   return (
-    <div className="text-center justify-center flex w-full max-w-6xl mx-auto">
-      <table className="w-full table-fixed">
-        <thead>
-          <tr>
-            <th className="font-bold text-4xl py-2">Pokemons</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pokemonList.map((pokemon: PokemonProps) => (
-            <tr
-              key={pokemon.name}
-              className="odd:bg-slate-950 even:bg-slate-900 hover:bg-slate-800  transition"
-            >
-              <td
-                className={cn(
-                  "py-2 text-center text-blue-200 uppercase text-xl font-semibold border-2 border-gray-400",
-                )}
-              >
-                <Link href={pokemon.name}>
-                  <p className="hover:scale-105 hover:text-blue-700 transition duration-300 ">
-                    {pokemon.name}
-                  </p>
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="text-center justify-center flex-col w-full max-w-6xl mx-auto">
+      <Input
+        type="text"
+        placeholder="Busca tu Pokemon..."
+        onChange={(e) => setFilter(e.target.value)}
+      />
+
+      <PokemonTable pokemonList={filteredPokemonList} />
     </div>
   );
 }
