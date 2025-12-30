@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
-
   const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
@@ -16,6 +15,7 @@ export default function Home() {
       const data = await getPokemons();
       setPokemonList(data.results);
     };
+
     fetchPokemon();
   }, []);
 
