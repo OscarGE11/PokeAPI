@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+  --color-background: rgb(11 12 16);
+  --color-title: rgb(73, 136, 196);
+  --color-text: rgb(197 198 199);
+  --color-alt: rgb(1 40 51);
+}
+

@@ -26,15 +26,13 @@ export default function Pokemon() {
     getPokemon(pokemonName).then(setPokemon);
   }, [pokemonName]);
 
-  console.log(pokemon);
-
   if (!pokemon) return <div>Cargando...</div>;
 
   return (
     <div className="flex items-center rounded-2xl bg-gray-200 shadow-xl">
       <div className="flex flex-col relative">
         <Image
-          src={pokemon.sprites.front_default}
+          src={pokemon.sprites?.front_default ?? "/placeholder.png"}
           alt={pokemon.name}
           width="256"
           height="256"
