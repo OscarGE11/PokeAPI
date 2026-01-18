@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <Header />
         <div className="flex-1">
-          <div className="min-h-screen px-10 py-5 bg-background">
+          <div className="min-h-screen px-10 py-5 bg-background text-white">
             {children}
           </div>
         </div>
